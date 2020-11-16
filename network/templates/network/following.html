@@ -1,0 +1,14 @@
+{% extends "network/layout.html" %} {% block title %}Following{% endblock %}
+<!-- body starts -->
+{% block body %}
+
+<div class="jumbotron" style="margin-top: 20px; box-shadow: 0 0 20px #0005; padding: 20px">
+  <h1 class="display-4" style="color: #084">Following</h1>
+  <hr />
+</div>
+
+<!-- following posts -->
+{% include 'utils/posts.html' %}
+
+<!-- body ends -->
+{% endblock %}

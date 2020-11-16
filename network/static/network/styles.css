@@ -1,0 +1,47 @@
+body {
+  font-size: 14px;
+  background-color: #eee;
+}
+#message {
+  margin: 20px 0;
+  display: none;
+}
+button[disabled] {
+  cursor: not-allowed;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+form label,
+form textarea {
+  width: 100%;
+}
+form label {
+  margin: 0;
+}
+form textarea {
+  padding: 5px 10px;
+  resize: none;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 20px #0002;
+  transition: all 0.3s;
+}
+form textarea:focus,
+form textarea:hover {
+  box-shadow: 0 0 20px #0004;
+}
+form button {
+  margin: 5px 0 20px;
+}
+.form-group {
+  width: 100%;
+}
+.paginator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+}

@@ -1,0 +1,25 @@
+{% extends "network/layout.html" %}
+<!-- load static -->
+{% load static %}
+<!-- body starts -->
+{% block body %}
+
+<h1 class="h3">All Posts</h1>
+<!-- include style -->
+{% if user.is_authenticated %}
+<form id="newPost">
+  <label for="content">New Post:</label>
+  <textarea id="content" placeholder="Post Content..." name="content" rows="3" required>{{content}}</textarea>
+  <button type="submit" class="btn btn-success">Post</button>
+</form>
+{% endif %}
+
+<!-- all posts -->
+{% include 'utils/posts.html' %}
+
+<!-- body ends -->
+{% endblock %}
+<!-- load script -->
+{% block script %}
+<script src="{% static 'network/index.js' %}"></script>
+{% endblock %}

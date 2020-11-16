@@ -1,0 +1,53 @@
+{% extends "network/layout.html" %} {% block title %} @{{profile}} {% endblock %}
+<!-- body starts -->
+{% block body %}
+
+<div class="jumbotron" style="margin-top: 20px; box-shadow: 0 0 20px #0005; padding: 1rem">
+  <h1 class="display-4 text-center" style="color: #084">@{{profile}}</h1>
+  <hr class="my-4" />
+  <div class="d-flex align-items-center" style="justify-content: space-evenly; font-size: 20px">
+    <div style="color: #b800b8">
+      <span>Followers:</span>
+      <strong id="followers">{{followers}}</strong>
+    </div>
+    <div style="color: #598500">
+      <span>Followings:</span>
+      <strong>{{followings}}</strong>
+    </div>
+    <div style="color: #1d9085">
+      <span>Posts:</span>
+      <strong>{{total_posts}}</strong>
+    </div>
+  </div>
+  {% if user.is_authenticated and user.username != profile %}
+  <hr class="my-4" />
+  <div class="text-center">
+    <button id="follow" class="btn btn-success">{% if am_i_following %} Unfollow {% else %} Follow {% endif %}</button>
+  </div>
+  {% endif %}
+</div>
+<script>
+  const followers = document.getElementById('followers');
+  const follow = document.getElementById('follow');
+  if (follow) {
+    follow.onclick = (_) => {
+      const followed = _.target.innerText.trim() === 'Follow';
+      _.target.disabled = true;
+      http
+        .put('/follow/{{profileid}}', { follow: followed })
+        .then(() => {
+          _.target.innerText = followed ? 'Unfollow' : 'Follow';
+          _.target.disabled = false;
+          const total_followers = parseInt(followers.innerText);
+          followers.innerText = followed ? total_followers + 1 : total_followers - 1;
+        })
+        .catch(http.catchError);
+    };
+  }
+</script>
+
+<!-- user posts -->
+{% include 'utils/posts.html' %}
+
+<!-- body ends -->
+{% endblock %}

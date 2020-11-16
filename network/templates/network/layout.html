@@ -1,0 +1,74 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %}Social Network{% endblock %}</title>
+    <link rel="icon" href="{% static 'network/favicon.ico' %}" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link href="{% static 'network/styles.css' %}" rel="stylesheet" />
+    <script>
+      class http {
+        static async get(url, headers = {}) {
+          const res = await fetch(url, { headers });
+          return await res.json();
+        }
+        static async post(url, body, headers = {}) {
+          const res = await fetch(url, { body: JSON.stringify(body), headers, method: 'POST' });
+          return await res.json();
+        }
+        static async put(url, body, headers = {}) {
+          const res = await fetch(url, { body: JSON.stringify(body), headers, method: 'PUT' });
+          return await res.json();
+        }
+        static catchError(e) {
+          throw e;
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <input type="hidden" id="user" value="{% if user.is_authenticated %}{{user.username}}{% endif %}" />
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #084">
+      <div class="container" style="justify-content: space-between">
+        <a class="navbar-brand" href="{% url 'index' %}">Network</a>
+
+        <ul class="navbar-nav">
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'user' user.username %}"><strong>{{ user.username }}</strong></a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">All Posts</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'following' %}">Following</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Log In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Register</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <div id="message" role="alert" class="alert text-center"></div>
+    </div>
+    <div class="container">{% block body %} {% endblock %}</div>
+    {% block script %} {% endblock %}
+  </body>
+</html>

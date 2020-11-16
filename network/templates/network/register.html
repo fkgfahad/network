@@ -1,0 +1,32 @@
+{% extends "network/layout.html" %} {% block title %}Register{% endblock %} {% block body %} {% include 'utils/auth.style.html' %}
+
+<div class="auth-container">
+  <div>
+    <h1 class="h3">Register</h1>
+
+    {% if message %}
+    <div class="alert alert-warning text-center" role="alert">{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'register' %}" method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <input class="form-control" autofocus autocomplete="off" type="text" name="username" placeholder="Username" />
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="email" autocomplete="off" name="email" placeholder="Email Address" />
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="password" name="password" placeholder="Password" />
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password" />
+      </div>
+      <input class="btn btn-primary" type="submit" value="Register" />
+    </form>
+
+    Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+  </div>
+</div>
+
+{% endblock %}
